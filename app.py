@@ -25,9 +25,9 @@ y=np.log(df['Price'])
 X_train,X_test,Y_train,Y_test = train_test_split(x,y,test_size=0.15,random_state=2)
  
 #Linear regresion
-
+catego_features_idx=[0,1,7,9,10]
 step_lr = ColumnTransformer(transformers=[
-    ('col_tnf',OneHotEncoder(sparse=False,drop='first'),[0,1,7,9,10])
+    ('col_tnf',OneHotEncoder(sparse_output=False, drop='first', categories='auto' ),catego_features_idx)
 ],remainder='passthrough')
 
 lr = LinearRegression()
@@ -47,7 +47,7 @@ Y_pred = pipe_lr.predict(X_test)
 #KNN
 
 step_KNN = ColumnTransformer(transformers=[
-    ('col_tnf',OneHotEncoder(sparse=False,drop='first'),[0,1,7,9,10])
+    ('col_tnf',OneHotEncoder(sparse_output=False, drop='first', categories='auto' ),catego_features_idx)
 ],remainder='passthrough')
 
 KNN = KNeighborsRegressor(n_neighbors=3)
@@ -67,7 +67,7 @@ Y_pred = pipe_KNN.predict(X_test)
 #DECISION TREE
 
 step_DT = ColumnTransformer(transformers=[
-    ('col_tnf',OneHotEncoder(sparse=False,drop='first'),[0,1,7,9,10])
+    ('col_tnf',OneHotEncoder(sparse_output=False, drop='first', categories='auto' ),catego_features_idx)
 ],remainder='passthrough')
 
 DT = DecisionTreeRegressor(max_depth=8)
@@ -87,7 +87,7 @@ Y_pred = pipe_DT.predict(X_test)
 # RANDOM FOREST
 
 step1 = ColumnTransformer(transformers=[
-    ('col_tnf',OneHotEncoder(sparse=False,drop='first'),[0,1,7,9,10])
+    ('col_tnf',OneHotEncoder(sparse_output=False, drop='first', categories='auto' ),catego_features_idx)
 ],remainder='passthrough')
 
 rd = RandomForestRegressor(n_estimators=100,
